@@ -10,7 +10,7 @@ String ls_action = request.getParameter("Action");
 /* Paso 2) Inicializar variables */
 String ls_result = "Base de datos actualizada...";
 String ls_query = "";
-String filePath= "c:\\Apache\\Tomcat\\webapps\\SUCARNET\\data\\datos.mdb";
+String filePath= "C:\\Tomcat8Java7\\webapps\\Guia52\\JSPdatos_Grupo05\\data\\datos.mdb";
 String ls_dburl = "jdbc:odbc:Driver={MicroSoft Access Driver (*.mdb)};DBQ="+filePath;
 String ls_usuario = "";
 String ls_password = "";
@@ -35,7 +35,7 @@ ls_query += " set titulo= " + "'" + ls_titulo + "'";
 ls_query += " where isbn = " + "'" + ls_isbn + "'";
 }
  
-/* Paso4) Conexión a la base de datos */
+/* Paso4) Conexiï¿½n a la base de datos */
 Connection l_dbconn = null;
  
 try {
@@ -43,9 +43,9 @@ Class.forName(ls_dbdriver);
 /*&nbsp; getConnection(URL,User,Pw) */
 l_dbconn = DriverManager.getConnection(ls_dburl,ls_usuario,ls_password);
  
-/*Creación de SQL Statement */
+/*Creaciï¿½n de SQL Statement */
 Statement l_statement = l_dbconn.createStatement();
-/* Ejecución de SQL Statement */
+/* Ejecuciï¿½n de SQL Statement */
 l_statement.execute(ls_query);
 } catch (ClassNotFoundException e) {
 ls_result = " Error creando el driver!";
@@ -60,7 +60,7 @@ if (l_dbconn != null) {
 l_dbconn.close();
 }
 } catch (SQLException e) {
-ls_result = "Error al cerrar la conexión.";
+ls_result = "Error al cerrar la conexiï¿½n.";
 ls_result += " <br/>" + e.toString();
 }
 }
@@ -70,7 +70,7 @@ html>
 <head><title>Updating a Database</title></head>
 <body>
  
-La siguiente instrucción fue ejecutada:
+La siguiente instrucciï¿½n fue ejecutada:
 <br/><br/>
 <%=ls_query%>
 <br/><br/>

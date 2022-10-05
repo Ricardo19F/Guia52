@@ -14,7 +14,7 @@
 </td>
   </tr>
  <tr>
- <td>Título<input type="text" name="titulo" value="" size="50"/></td>
+ <td>Tï¿½tulo<input type="text" name="titulo" value="" size="50"/></td>
  
  </tr>
  <tr><td> Action <input type="radio" name="Action" value="Actualizar" /> Actualizar
@@ -32,7 +32,7 @@
 <%!
 public Connection getConnection() throws SQLException {
 String driver = "sun.jdbc.odbc.JdbcOdbcDriver";
-String filePath= "c:\\Apache\\Tomcat\\webapps\\SUCARNET\\data\\datos.mdb";
+String filePath= "C:\\Tomcat8Java7\\webapps\\Guia52\\JSPdatos_Grupo05\\data\\datos.mdb";
 String userName="",password="";
 String fullConnectionString = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=" + filePath;
 
@@ -57,7 +57,7 @@ out.write("OK");
       ResultSet rs = st.executeQuery("select * from libros" );
 
       // Ponemos los resultados en un table de html
-      out.println("<table border=\"1\"><tr><td>Num.</td><td>ISBN</td><td>Titulo</td><td>Acción</td></tr>");
+      out.println("<table border=\"1\"><tr><td>Num.</td><td>ISBN</td><td>Titulo</td><td>Acciï¿½n</td></tr>");
       int i=1;
       while (rs.next())
       {
@@ -65,7 +65,8 @@ out.write("OK");
          out.println("<td>"+ i +"</td>");
          out.println("<td>"+rs.getString("isbn")+"</td>");
          out.println("<td>"+rs.getString("titulo")+"</td>");
-         out.println("<td>"+"Actualizar<br>Eliminar"+"</td>");
+         out.println("<td>"+"Actualizar<br>");
+         out.println("<a href="">Eliminar</a>"+"</td>");
          out.println("</tr>");
          i++;
       }
