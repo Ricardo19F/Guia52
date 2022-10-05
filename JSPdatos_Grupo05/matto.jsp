@@ -10,7 +10,9 @@ String ls_action = request.getParameter("Action");
 /* Paso 2) Inicializar variables */
 String ls_result = "Base de datos actualizada...";
 String ls_query = "";
-String filePath= "C:\\Tomcat8Java7\\webapps\\Guia52\\JSPdatos_Grupo05\\data\\datos.mdb";
+ServletContext context = request.getServletContext();
+String path = context.getRealPath("/data");
+String filePath= path+"\\datos.mdb";
 String ls_dburl = "jdbc:odbc:Driver={MicroSoft Access Driver (*.mdb)};DBQ="+filePath;
 String ls_usuario = "";
 String ls_password = "";
