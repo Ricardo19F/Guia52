@@ -61,12 +61,13 @@ out.write("OK");
       int i=1;
       while (rs.next())
       {
+         String isbn = rs.getString("isbn");
          out.println("<tr>");
          out.println("<td>"+ i +"</td>");
-         out.println("<td>"+rs.getString("isbn")+"</td>");
+         out.println("<td>"+isbn+"</td>");
          out.println("<td>"+rs.getString("titulo")+"</td>");
          out.println("<td>"+"Actualizar<br>");
-         out.println("<a href="">Eliminar</a>"+"</td>");
+         out.println("<a href='matto.jsp?isbn=" + isbn + "&Action=Eliminar'>Eliminar</a>"+"</td>");
          out.println("</tr>");
          i++;
       }
