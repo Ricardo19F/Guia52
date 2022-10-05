@@ -10,14 +10,21 @@
 <form action="matto.jsp" method="post" name="Actualizar">
  <table>
  <tr>
- <td>ISBN<input type="text" name="isbn" value="" size="40"/>
+ <td>ISBN<input type="text" name="isbn" value="
+ <%
+	int dato1 = 3;
+	int dato2 = 5;
+	if(dato2 > dato1){
+		request.getParameter("isbn")
+	}
+%>" size="40"/>
 </td>
   </tr>
  <tr>
  <td>T�tulo<input type="text" name="titulo" value="" size="50"/></td>
  
  </tr>
- <tr><td> Action <input type="radio" name="Action" value="Actualizar" /> Actualizar
+ <tr><td> Action <input type="radio" name="Action" value="Actualizar"  /> Actualizar
  <input type="radio" name="Action" value="Eliminar" /> Eliminar
  <input type="radio" name="Action" value="Crear" checked /> Crear
   </td>
@@ -66,7 +73,7 @@ out.write("OK");
          out.println("<td>"+ i +"</td>");
          out.println("<td>"+isbn+"</td>");
          out.println("<td>"+rs.getString("titulo")+"</td>");
-         out.println("<td>"+"Actualizar<br>");
+         out.println("<td>"+"<a href='libros.jsp?isbn=" + isbn + "&Action=Actualizar'>Actualizar</a><br>");
          out.println("<a href='matto.jsp?isbn=" + isbn + "&Action=Eliminar'>Eliminar</a>"+"</td>");
          out.println("</tr>");
          i++;
