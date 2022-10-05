@@ -37,9 +37,9 @@
  </form>
 <br><br>
 <%!
-public Connection getConnection() throws SQLException {
+public Connection getConnection(String path) throws SQLException {
 String driver = "sun.jdbc.odbc.JdbcOdbcDriver";
-String filePath= "C:\\Tomcat8Java7\\webapps\\Guia52\\JSPdatos_Grupo05\\data\\datos.mdb";
+String filePath= path+"\\datos.mdb";
 String userName="",password="";
 String fullConnectionString = "jdbc:odbc:Driver={Microsoft Access Driver (*.mdb)};DBQ=" + filePath;
 
@@ -56,7 +56,9 @@ System.out.println("Error: " + e);
 }
 %>
 <%
-Connection conexion = getConnection();
+ServletContext context = request.getServletContext();
+String path = context.getRealPath("/data");
+Connection conexion = getConnection(path);
    if (!conexion.isClosed()){
 out.write("OK");
  
