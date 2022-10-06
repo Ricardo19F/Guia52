@@ -10,23 +10,31 @@
 <form action="matto.jsp" method="post" name="Actualizar">
  <table>
  <tr>
- <td>ISBN<input type="text" name="isbn" value="
- <%
-	//int dato1 = 3;
-	//int dato2 = 5;
-	//if(dato2 > dato1){
-		//request.getParameter("isbn");
-	//}
+ <td>ISBN<input type="text" name="isbn" value="<%
+	if(request.getParameter("isbn")!=null){
+		out.write(request.getParameter("isbn"));
+	}
 %>" size="40"/>
 </td>
   </tr>
  <tr>
- <td>T�tulo<input type="text" name="titulo" value="" size="50"/></td>
+ <td>T�tulo<input type="text" name="titulo" value="<%
+	if(request.getParameter("titulo")!=null){
+		out.write(request.getParameter("titulo"));
+	}
+%>" size="50"/></td>
  
  </tr>
- <tr><td> Action <input type="radio" name="Action" value="Actualizar"  /> Actualizar
+ <tr><td> Action <input type="radio" name="Action" value="Actualizar" <% 
+ if (request.getParameter("Action")!=null){
+ if(request.getParameter("Action").equals("Actualizar")){
+   out.write("checked");
+ }} %> /> Actualizar
  <input type="radio" name="Action" value="Eliminar" /> Eliminar
- <input type="radio" name="Action" value="Crear" checked /> Crear
+ <input type="radio" name="Action" value="Crear" <% 
+ if (request.getParameter("Action")==null){
+   out.write("checked");
+ } %>/> Crear
   </td>
  <td><input type="SUBMIT" value="ACEPTAR" />
 </td>
@@ -59,7 +67,6 @@ System.out.println("Error: " + e);
 ServletContext context = request.getServletContext();
 String path = context.getRealPath("/JSPdatos_Grupo05/data");
 Connection conexion = getConnection(path);
-out.write(path);
    if (!conexion.isClosed()){
 out.write("OK");
  
@@ -72,11 +79,12 @@ out.write("OK");
       while (rs.next())
       {
          String isbn = rs.getString("isbn");
+         String titulo = rs.getString("titulo");
          out.println("<tr>");
          out.println("<td>"+ i +"</td>");
          out.println("<td>"+isbn+"</td>");
-         out.println("<td>"+rs.getString("titulo")+"</td>");
-         out.println("<td>"+"<a href='libros.jsp?isbn=" + isbn + "&Action=Actualizar'>Actualizar</a><br>");
+         out.println("<td>"+titulo+"</td>");
+         out.println("<td>"+"<a href='libros.jsp?isbn=" + isbn + "&titulo="+titulo+"&Action=Actualizar'>Actualizar</a><br>");
          out.println("<a href='matto.jsp?isbn=" + isbn + "&Action=Eliminar'>Eliminar</a>"+"</td>");
          out.println("</tr>");
          i++;

@@ -3,7 +3,7 @@
  
 <%
 /* Paso 1) Obtener los datos del formulario */
-String ls_isbn = request.getParameter("isbn");
+String ls_isbn = request.getParameter("isbn").trim();
 String ls_titulo = request.getParameter("titulo");
 String ls_action = request.getParameter("Action");
  
@@ -11,7 +11,7 @@ String ls_action = request.getParameter("Action");
 String ls_result = "Base de datos actualizada...";
 String ls_query = "";
 ServletContext context = request.getServletContext();
-String path = context.getRealPath("/data");
+String path = context.getRealPath("/JSPdatos_Grupo05/data");
 String filePath= path+"\\datos.mdb";
 String ls_dburl = "jdbc:odbc:Driver={MicroSoft Access Driver (*.mdb)};DBQ="+filePath;
 String ls_usuario = "";
@@ -33,7 +33,7 @@ ls_query += "'" + ls_isbn + "'";
  
 if (ls_action.equals("Actualizar")) {
 ls_query = " update libros";
-ls_query += " set titulo= " + "'" + ls_titulo + "'";
+ls_query += " set titulo = " + "'" + ls_titulo + "'";
 ls_query += " where isbn = " + "'" + ls_isbn + "'";
 }
  
