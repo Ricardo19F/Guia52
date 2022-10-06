@@ -18,9 +18,17 @@
 </td>
   </tr>
  <tr>
- <td>T�tulo<input type="text" name="titulo" value="<%
+ <td>T&iacute;tulo<input type="text" name="titulo" value="<%
 	if(request.getParameter("titulo")!=null){
 		out.write(request.getParameter("titulo"));
+	}
+%>" size="50"/></td>
+ 
+ </tr>
+ <tr>
+ <td>Autor<input type="text" name="autor" value="<%
+	if(request.getParameter("autor")!=null){
+		out.write(request.getParameter("autor"));
 	}
 %>" size="50"/></td>
  
@@ -74,17 +82,19 @@ out.write("OK");
       ResultSet rs = st.executeQuery("select * from libros" );
 
       // Ponemos los resultados en un table de html
-      out.println("<table border=\"1\"><tr><td>Num.</td><td>ISBN</td><td>Titulo</td><td>Acci�n</td></tr>");
+      out.println("<table border=\"1\"><tr><td>Num.</td><td>ISBN</td><td>Titulo</td><td>Autor</td><td>Acci&oacute;n</td></tr>");
       int i=1;
       while (rs.next())
       {
          String isbn = rs.getString("isbn");
          String titulo = rs.getString("titulo");
+         String autor = rs.getString("autor");
          out.println("<tr>");
          out.println("<td>"+ i +"</td>");
          out.println("<td>"+isbn+"</td>");
          out.println("<td>"+titulo+"</td>");
-         out.println("<td>"+"<a href='libros.jsp?isbn=" + isbn + "&titulo="+titulo+"&Action=Actualizar'>Actualizar</a><br>");
+         out.println("<td>"+autor+"</td>");
+         out.println("<td>"+"<a href='libros.jsp?isbn=" + isbn + "&titulo="+titulo+"&autor="+autor+"&Action=Actualizar'>Actualizar</a><br>");
          out.println("<a href='matto.jsp?isbn=" + isbn + "&Action=Eliminar'>Eliminar</a>"+"</td>");
          out.println("</tr>");
          i++;
