@@ -12,11 +12,11 @@
  <tr>
  <td>ISBN<input type="text" name="isbn" value="
  <%
-	int dato1 = 3;
-	int dato2 = 5;
-	if(dato2 > dato1){
-		request.getParameter("isbn")
-	}
+	//int dato1 = 3;
+	//int dato2 = 5;
+	//if(dato2 > dato1){
+		//request.getParameter("isbn");
+	//}
 %>" size="40"/>
 </td>
   </tr>
@@ -57,8 +57,9 @@ System.out.println("Error: " + e);
 %>
 <%
 ServletContext context = request.getServletContext();
-String path = context.getRealPath("/data");
+String path = context.getRealPath("/JSPdatos_Grupo05/data");
 Connection conexion = getConnection(path);
+out.write(path);
    if (!conexion.isClosed()){
 out.write("OK");
  
