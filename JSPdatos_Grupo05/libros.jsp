@@ -14,7 +14,7 @@
 	if(request.getParameter("isbn")!=null){
 		out.write(request.getParameter("isbn"));
 	}
-%>" size="40"/>
+%>" size="40" required/>
 </td>
   </tr>
  <tr>
@@ -75,14 +75,28 @@ System.out.println("Error: " + e);
 ServletContext context = request.getServletContext();
 String path = context.getRealPath("/JSPdatos_Grupo05/data");
 Connection conexion = getConnection(path);
+String ls_order = "";
+String order = ls_order;
+if (request.getParameter("order")!=null && (request.getParameter("order").equals("asc") || request.getParameter("order").equals("desc"))){
+  ls_order = request.getParameter("order");
+  order = ls_order;
+  ls_order = " order by titulo " + ls_order;
+}
+out.write(ls_order);
    if (!conexion.isClosed()){
-out.write("OK");
- 
+      out.write("OK");
+
+
       Statement st = conexion.createStatement();
-      ResultSet rs = st.executeQuery("select * from libros" );
+      ResultSet rs = st.executeQuery("select * from libros" + ls_order);
 
       // Ponemos los resultados en un table de html
-      out.println("<table border=\"1\"><tr><td>Num.</td><td>ISBN</td><td>Titulo</td><td>Autor</td><td>Acci&oacute;n</td></tr>");
+      if(order.equals("") || order.equals("desc")){
+      out.println("<table border=\"1\"><tr><td>Num.</td><td>ISBN</td><td><a href='libros.jsp?order=asc'>Titulo</a></td><td>Autor</td><td>Acci&oacute;n</td></tr>");
+      }
+      else if (order.equals("asc")){
+        out.println("<table border=\"1\"><tr><td>Num.</td><td>ISBN</td><td><a href='libros.jsp?order=desc'>Titulo</a></td><td>Autor</td><td>Acci&oacute;n</td></tr>");
+      }
       int i=1;
       while (rs.next())
       {
