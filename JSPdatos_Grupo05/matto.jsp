@@ -39,7 +39,13 @@ ls_query += " set titulo = " + "'" + ls_titulo + "',";
 ls_query += " autor = " + "'" + ls_autor + "'";
 ls_query += " where isbn = " + "'" + ls_isbn + "'";
 }
- 
+
+//Metodo hecho por Cristian.
+if (ls_action.equals("Buscar")) {
+    ls_query = " select * from libros";
+    ls_query += " where autor = " + "'" + ls_autor + "'" +" or " +"'"+" titulo ="+ls_titulo+ "'";
+      
+}
 /* Paso4) Conexi�n a la base de datos */
 Connection l_dbconn = null;
  
@@ -48,10 +54,11 @@ Class.forName(ls_dbdriver);
 /*&nbsp; getConnection(URL,User,Pw) */
 l_dbconn = DriverManager.getConnection(ls_dburl,ls_usuario,ls_password);
  
-/*Creaci�n de SQL Statement */
+/*Creacion de SQL Statement */
 Statement l_statement = l_dbconn.createStatement();
-/* Ejecuci�n de SQL Statement */
+/* Ejecucion de SQL Statement */
 l_statement.execute(ls_query);
+
 } catch (ClassNotFoundException e) {
 ls_result = " Error creando el driver!";
 ls_result += " <br/>" + e.toString();
@@ -74,7 +81,6 @@ html>
 <html>
 <head><title>Updating a Database</title></head>
 <body>
- 
 La siguiente instrucci�n fue ejecutada:
 <br/><br/>
 <%=ls_query%>

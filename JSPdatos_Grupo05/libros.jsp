@@ -10,7 +10,7 @@
 <form action="matto.jsp" method="post" name="Actualizar">
  <table>
  <tr>
- <td>ISBN<input type="text" name="isbn" value="<%
+ <td>ISBN<input type="text" name="isbn" id="isbn" value="<%
 	if(request.getParameter("isbn")!=null){
 		out.write(request.getParameter("isbn"));
 	}
@@ -18,22 +18,22 @@
 </td>
   </tr>
  <tr>
- <td>T&iacute;tulo<input type="text" name="titulo" value="<%
+ <td>T&iacute;tulo<input type="text" name="titulo" id="titulo" value="<%
 	if(request.getParameter("titulo")!=null){
 		out.write(request.getParameter("titulo"));
 	}
 %>" size="50"/></td>
- 
  </tr>
  <tr>
- <td>Autor<input type="text" name="autor" value="<%
+ <td>Autor<input type="text" name="autor" id="autor" value="<%
 	if(request.getParameter("autor")!=null){
 		out.write(request.getParameter("autor"));
 	}
 %>" size="50"/></td>
  
  </tr>
- <tr><td> Action <input type="radio" name="Action" value="Actualizar" <% 
+ <tr>
+  <td> Acciones disponibles: <input type="radio" name="Action" value="Actualizar" <% 
  if (request.getParameter("Action")!=null){
  if(request.getParameter("Action").equals("Actualizar")){
    out.write("checked");
@@ -43,10 +43,29 @@
  if (request.getParameter("Action")==null){
    out.write("checked");
  } %>/> Crear
+ <input type="radio" name="Action" value="Buscar" <% 
+ if (request.getParameter("Action")!=null){
+ if(request.getParameter("Action").equals("Buscar")){
+   out.write("checked");
+ }} %> /> Buscar
   </td>
- <td><input type="SUBMIT" value="ACEPTAR" />
-</td>
+ <td><input id="aceptar" type="SUBMIT" value="ACEPTAR" disabled onclick=""/></td>
  </tr>
+ <script>
+  function validar(){
+    var titulo = document.getElementById('titulo').value;
+    var autor = document.getElementById('autor').value;
+
+  if(titulo == '' || autor == ''){
+     document.getElementById('aceptar').disabled = true;
+  }
+  if (titulo != '' && autor != ''){
+     document.getElementById('aceptar').disabled = false;
+  }
+  }
+  document.getElementById("autor").addEventListener("keyup",validar);
+  document.getElementById("titulo").addEventListener("keyup",validar);
+</script>
  </form>
  </tr>
  </table>

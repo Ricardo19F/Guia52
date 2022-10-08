@@ -10,20 +10,32 @@
 <form action="matto.jsp" method="post" name="Actualizar">
  <table>
  <tr>
- <td>ISBN<input type="text" name="isbn" value="" size="40"/>
+ <td>ISBN<input type="text" name="isbn" value="" size="40" onkeyup="validar();"/>
 </td>
   </tr>
  <tr>
- <td>Título<input type="text" name="titulo" value="" size="50"/></td>
+ <td>T&iacute;tulo<input type="text" name="titulo" value="" size="50"/ onkeyup="validar();"></td>
  
  </tr>
  <tr><td> Action <input type="radio" name="Action" value="Actualizar" /> Actualizar
  <input type="radio" name="Action" value="Eliminar" /> Eliminar
  <input type="radio" name="Action" value="Crear" checked /> Crear
   </td>
- <td><input type="SUBMIT" value="ACEPTAR" />
+ <td><input  type="SUBMIT" id="boton" value="ACEPTAR" disabled/>
 </td>
  </tr>
+ <script>
+   function validar(){
+      botonInput = document.getElementById('boton').value;
+   if(botonInput != ''){
+      document.getElementById('boton').disable = true;
+   }
+   else{
+      document.getElementById('boton').disable = false;
+   }
+   }
+
+</script>
  </form>
  </tr>
  </table>
@@ -57,7 +69,7 @@ out.write("OK");
       ResultSet rs = st.executeQuery("select * from libros" );
 
       // Ponemos los resultados en un table de html
-      out.println("<table border=\"1\"><tr><td>Num.</td><td>ISBN</td><td>Titulo</td><td>Acción</td></tr>");
+      out.println("<table border=\"1\"><tr><td>Num.</td><td>ISBN</td><td>Titulo</td><td>Acci&oacute;n</td></tr>");
       int i=1;
       while (rs.next())
       {
