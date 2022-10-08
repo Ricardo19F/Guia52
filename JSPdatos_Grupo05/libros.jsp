@@ -70,7 +70,12 @@
  </tr>
  </table>
  </form>
-<br><br>
+<h3>Buscar libro por su ISBN</h3>
+<form name="FormBuscar" action="libros.jsp" method="post">ISBN a buscar: <input type="text" name="isbn-buscar" placeholder="ingrese un isbn"><input type="submit" name="buscar" value="BUSCAR">
+</form>
+<h3>Buscar libro por su Titulo</h3>
+<form name="FormBuscar" action="libros.jsp" method="post">Titulo a buscar: <input type="text" name="titulo-buscar" placeholder="ingrese un titulo"><input type="submit" name="buscar" value="BUSCAR">
+</form>
 <%!
 public Connection getConnection(String path) throws SQLException {
 String driver = "sun.jdbc.odbc.JdbcOdbcDriver";
@@ -95,10 +100,41 @@ ServletContext context = request.getServletContext();
 String path = context.getRealPath("/JSPdatos_Grupo05/data");
 Connection conexion = getConnection(path);
    if (!conexion.isClosed()){
-out.write("OK");
- 
-      Statement st = conexion.createStatement();
-      ResultSet rs = st.executeQuery("select * from libros" );
+       Statement st = conexion.createStatement();
+     
+     // Consulta para encontrar el ISBN
+     String texto = request.getParameter("isbn-buscar");
+     String isbn_enc = "";
+     String resul_busqueda = "";
+     if(texto != null &&  texto != ""){
+  ResultSet rs2 = st.executeQuery("select * from libros where isbn = '" + request.getParameter("isbn-buscar") + "'");
+     if(rs2.next()){
+       isbn_enc = rs2.getString("isbn");
+       resul_busqueda += "ISBN Encontrado";
+     }
+     else
+        resul_busqueda += "ISBN No encontrado";
+        out.println(resul_busqueda);
+        rs2.close();
+     }
+
+   //Consulta para encontrar el TITULO
+      String texto2 = request.getParameter("titulo-buscar");
+     String titulo_enc = "";
+     String resul_busqueda2 = "";
+     if(texto2 != null &&  texto2 != ""){
+  ResultSet rs3 = st.executeQuery("select * from libros where titulo = '" + request.getParameter("titulo-buscar") + "'");
+     if(rs3.next()){
+       titulo_enc = rs3.getString("titulo");
+       resul_busqueda2 += "Titulo Encontrado";
+     }
+     else
+        resul_busqueda2 += "Titulo No encontrado";
+        out.println(resul_busqueda2);
+        rs3.close();
+     }
+
+      ResultSet rs = st.executeQuery("select * from libros");
 
       // Ponemos los resultados en un table de html
       out.println("<table border=\"1\"><tr><td>Num.</td><td>ISBN</td><td>Titulo</td><td>Autor</td><td>Acci&oacute;n</td></tr>");
@@ -108,7 +144,10 @@ out.write("OK");
          String isbn = rs.getString("isbn");
          String titulo = rs.getString("titulo");
          String autor = rs.getString("autor");
-         out.println("<tr>");
+         if(isbn_enc.equals(isbn) || titulo_enc.equals(titulo))
+          out.println("<tr style=\"background-color: rgb(83, 251, 111);\">");
+          else
+           out.println("<tr>");
          out.println("<td>"+ i +"</td>");
          out.println("<td>"+isbn+"</td>");
          out.println("<td>"+titulo+"</td>");
@@ -126,3 +165,4 @@ out.write("OK");
 
 %>
  </body>
+</html>
