@@ -10,7 +10,7 @@
 <form action="matto.jsp" method="post" name="Actualizar">
  <table>
  <tr>
- <td>ISBN<input type="text" name="isbn" value="<%
+ <td>ISBN<input type="text" name="isbn" id="isbn" value="<%
 	if(request.getParameter("isbn")!=null){
 		out.write(request.getParameter("isbn"));
 	}
@@ -18,22 +18,22 @@
 </td>
   </tr>
  <tr>
- <td>T&iacute;tulo<input type="text" name="titulo" value="<%
+ <td>T&iacute;tulo<input type="text" name="titulo" id="titulo" value="<%
 	if(request.getParameter("titulo")!=null){
 		out.write(request.getParameter("titulo"));
 	}
 %>" size="50"/></td>
- 
  </tr>
  <tr>
- <td>Autor<input type="text" name="autor" value="<%
+ <td>Autor<input type="text" name="autor" id="autor" value="<%
 	if(request.getParameter("autor")!=null){
 		out.write(request.getParameter("autor"));
 	}
 %>" size="50"/></td>
  
  </tr>
- <tr><td> Action <input type="radio" name="Action" value="Actualizar" <% 
+ <tr>
+  <td> Acciones disponibles: <input type="radio" name="Action" value="Actualizar" <% 
  if (request.getParameter("Action")!=null){
  if(request.getParameter("Action").equals("Actualizar")){
    out.write("checked");
@@ -43,15 +43,39 @@
  if (request.getParameter("Action")==null){
    out.write("checked");
  } %>/> Crear
+ <input type="radio" name="Action" value="Buscar" <% 
+ if (request.getParameter("Action")!=null){
+ if(request.getParameter("Action").equals("Buscar")){
+   out.write("checked");
+ }} %> /> Buscar
   </td>
- <td><input type="SUBMIT" value="ACEPTAR" />
-</td>
+ <td><input id="aceptar" type="SUBMIT" value="ACEPTAR" disabled onclick=""/></td>
  </tr>
+ <script>
+  function validar(){
+    var titulo = document.getElementById('titulo').value;
+    var autor = document.getElementById('autor').value;
+
+  if(titulo == '' || autor == ''){
+     document.getElementById('aceptar').disabled = true;
+  }
+  if (titulo != '' && autor != ''){
+     document.getElementById('aceptar').disabled = false;
+  }
+  }
+  document.getElementById("autor").addEventListener("keyup",validar);
+  document.getElementById("titulo").addEventListener("keyup",validar);
+</script>
  </form>
  </tr>
  </table>
  </form>
-<br><br>
+<h3>Buscar libro por su ISBN</h3>
+<form name="FormBuscar" action="libros.jsp" method="post">ISBN a buscar: <input type="text" name="isbn-buscar" placeholder="ingrese un isbn"><input type="submit" name="buscar" value="BUSCAR">
+</form>
+<h3>Buscar libro por su Titulo</h3>
+<form name="FormBuscar" action="libros.jsp" method="post">Titulo a buscar: <input type="text" name="titulo-buscar" placeholder="ingrese un titulo"><input type="submit" name="buscar" value="BUSCAR">
+</form>
 <%!
 public Connection getConnection(String path) throws SQLException {
 String driver = "sun.jdbc.odbc.JdbcOdbcDriver";
@@ -84,10 +108,40 @@ if (request.getParameter("order")!=null && (request.getParameter("order").equals
 }
 out.write(ls_order);
    if (!conexion.isClosed()){
-      out.write("OK");
+       Statement st = conexion.createStatement();
+     
+     // Consulta para encontrar el ISBN
+     String texto = request.getParameter("isbn-buscar");
+     String isbn_enc = "";
+     String resul_busqueda = "";
+     if(texto != null &&  texto != ""){
+  ResultSet rs2 = st.executeQuery("select * from libros where isbn = '" + request.getParameter("isbn-buscar") + "'");
+     if(rs2.next()){
+       isbn_enc = rs2.getString("isbn");
+       resul_busqueda += "ISBN Encontrado";
+     }
+     else
+        resul_busqueda += "ISBN No encontrado";
+        out.println(resul_busqueda);
+        rs2.close();
+     }
 
+   //Consulta para encontrar el TITULO
+      String texto2 = request.getParameter("titulo-buscar");
+     String titulo_enc = "";
+     String resul_busqueda2 = "";
+     if(texto2 != null &&  texto2 != ""){
+  ResultSet rs3 = st.executeQuery("select * from libros where titulo = '" + request.getParameter("titulo-buscar") + "'");
+     if(rs3.next()){
+       titulo_enc = rs3.getString("titulo");
+       resul_busqueda2 += "Titulo Encontrado";
+     }
+     else
+        resul_busqueda2 += "Titulo No encontrado";
+        out.println(resul_busqueda2);
+        rs3.close();
+     }
 
-      Statement st = conexion.createStatement();
       ResultSet rs = st.executeQuery("select * from libros" + ls_order);
 
       // Ponemos los resultados en un table de html
@@ -103,7 +157,10 @@ out.write(ls_order);
          String isbn = rs.getString("isbn");
          String titulo = rs.getString("titulo");
          String autor = rs.getString("autor");
-         out.println("<tr>");
+         if(isbn_enc.equals(isbn) || titulo_enc.equals(titulo))
+          out.println("<tr style=\"background-color: rgb(83, 251, 111);\">");
+          else
+           out.println("<tr>");
          out.println("<td>"+ i +"</td>");
          out.println("<td>"+isbn+"</td>");
          out.println("<td>"+titulo+"</td>");
@@ -121,3 +178,4 @@ out.write(ls_order);
 
 %>
  </body>
+</html>
