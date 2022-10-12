@@ -73,8 +73,23 @@
 <h3>Buscar libro por su ISBN</h3>
 <form name="FormBuscar" action="libros.jsp" method="post">ISBN a buscar: <input type="text" name="isbn-buscar" placeholder="ingrese un isbn"><input type="submit" name="buscar" value="BUSCAR">
 </form>
-<h3>Buscar libro por su Titulo</h3>
-<form name="FormBuscar" action="libros.jsp" method="post">Titulo a buscar: <input type="text" name="titulo-buscar" placeholder="ingrese un titulo"><input type="submit" name="buscar" value="BUSCAR">
+<h3>Buscar libro por su Titulo y Autor</h3>
+<form name="FormBuscar" action="libros.jsp" method="post">Titulo a buscar: <input type="text" name="titulo-buscar" id="titulo-1" placeholder="ingrese un titulo"><br><br>Autor a buscar: <input type="text" name="autor-buscar" id="autor-1" placeholder="ingrese un Autor"><input type="submit" id="buscar" value="BUSCAR" disabled onclick="" />
+<script>
+  function validarDos(){
+    var exp = document.getElementById("titulo-1").value;
+  var exp2 = document.getElementById("autor-1").value;
+
+  if(exp == "" && exp2 == ""){
+    document.getElementById('buscar').disabled = true;
+  } 
+  if(exp != "" || exp2 != ""){
+    document.getElementById('buscar').disabled = false;
+  }
+  }
+  document.getElementById("titulo-1").addEventListener("keyup", validarDos);
+  document.getElementById("autor-1").addEventListener("keyup", validarDos);
+</script>
 </form>
 <%!
 public Connection getConnection(String path) throws SQLException {
@@ -130,8 +145,24 @@ Connection conexion = getConnection(path);
      }
      else
         resul_busqueda2 += "Titulo No encontrado";
-        out.println(resul_busqueda2);
+        out.println(resul_busqueda2 + "<br>");
         rs3.close();
+     }
+
+     //Consulta para encontrar el TITULO
+      String texto3 = request.getParameter("autor-buscar");
+     String autor_enc = "";
+     String resul_busqueda3 = "";
+     if(texto3 != null &&  texto3 != ""){
+  ResultSet rs4 = st.executeQuery("select * from libros where autor = '" + request.getParameter("autor-buscar") + "'");
+     if(rs4.next()){
+       autor_enc = rs4.getString("autor");
+       resul_busqueda3 += "Autor Encontrado";
+     }
+     else
+        resul_busqueda3 += "Autor No encontrado";
+        out.println(resul_busqueda3 + "<br>");
+        rs4.close();
      }
 
       ResultSet rs = st.executeQuery("select * from libros");
@@ -144,7 +175,7 @@ Connection conexion = getConnection(path);
          String isbn = rs.getString("isbn");
          String titulo = rs.getString("titulo");
          String autor = rs.getString("autor");
-         if(isbn_enc.equals(isbn) || titulo_enc.equals(titulo))
+         if(isbn_enc.equals(isbn) || titulo_enc.equals(titulo) || autor_enc.equals(autor))
           out.println("<tr style=\"background-color: rgb(83, 251, 111);\">");
           else
            out.println("<tr>");
