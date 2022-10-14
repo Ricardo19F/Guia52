@@ -121,7 +121,6 @@ if (request.getParameter("order")!=null && (request.getParameter("order").equals
   order = ls_order;
   ls_order = " order by titulo " + ls_order;
 }
-out.write(ls_order);
    if (!conexion.isClosed()){
        Statement st = conexion.createStatement();
      
@@ -173,7 +172,7 @@ out.write(ls_order);
         rs4.close();
      }
 
-      ResultSet rs = st.executeQuery("select * from libros");
+      ResultSet rs = st.executeQuery("select * from libros" + ls_order);
 
       // Ponemos los resultados en un table de html
       if(order.equals("") || order.equals("desc")){
