@@ -2,6 +2,7 @@
  <html>
  <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <link rel="stylesheet" href="./style.css" type="text/css">
  <title>Actualizar, Eliminar, Crear registros.</title>
  </head>
  <body>
@@ -71,10 +72,10 @@
  </table>
  </form>
 <h3>Buscar libro por su ISBN</h3>
-<form name="FormBuscar" action="libros.jsp" method="post">ISBN a buscar: <input type="text" name="isbn-buscar" placeholder="ingrese un isbn"><input type="submit" name="buscar" value="BUSCAR">
+<form name="FormBuscar" action="libros.jsp" method="post">ISBN a buscar: <input type="text" name="isbn-buscar" placeholder="Ingrese un ISBN"><input type="submit" name="buscar" value="BUSCAR">
 </form>
 <h3>Buscar libro por su Titulo y Autor</h3>
-<form name="FormBuscar" action="libros.jsp" method="post">Titulo a buscar: <input type="text" name="titulo-buscar" id="titulo-1" placeholder="ingrese un titulo"><br><br>Autor a buscar: <input type="text" name="autor-buscar" id="autor-1" placeholder="ingrese un Autor"><input type="submit" id="buscar" value="BUSCAR" disabled onclick="" />
+<form name="FormBuscar" action="libros.jsp" method="post">Titulo a buscar: <input type="text" name="titulo-buscar" id="titulo-1" placeholder="Ingrese un Titulo"><br>Autor a buscar: <input type="text" name="autor-buscar" id="autor-1" placeholder="Ingrese un Autor"><input type="submit" id="buscar" value="BUSCAR" disabled onclick="" />
 <script>
   function validarDos(){
     var exp = document.getElementById("titulo-1").value;
