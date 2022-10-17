@@ -191,7 +191,7 @@ if (!conexion.isClosed()){
         rs4.close();
     }
 
-    ResultSet rs = st.executeQuery("select * from libros" + ls_order);
+    ResultSet rs = st.executeQuery("SELECT editoriales.editorial as edit, libros.* FROM libros INNER JOIN editoriales ON libros.editorial = editoriales.id " + ls_order);
 
     // Ponemos los resultados en un table de html
     if(order.equals("") || order.equals("desc")){
@@ -207,6 +207,9 @@ if (!conexion.isClosed()){
       String isbn = rs.getString("isbn");
       String titulo = rs.getString("titulo");
       String autor = rs.getString("autor");
+      String anio = rs.getString("anio");
+      String editorial = rs.getString("edit");
+      String editorial_id = rs.getString("editorial");
       
       if(isbn_enc.equals(isbn) || titulo_enc.equals(titulo) || autor_enc.equals(autor))
         out.println("<tr style=\"background-color: rgb(83, 251, 111);\">");
@@ -216,16 +219,20 @@ if (!conexion.isClosed()){
         out.println("<td>"+isbn+"</td>");
         out.println("<td>"+titulo+"</td>");
         out.println("<td>"+autor+"</td>");
-        out.println("<td></td>");
-        out.println("<td></td>");
-        out.println("<td>"+"<a href='libros.jsp?isbn=" + isbn + "&titulo="+titulo+"&autor="+autor+"&Action=Actualizar'>Actualizar</a><br>");
+        out.println("<td>"+editorial+"</td>");
+        out.println("<td>"+ anio+ "</td>");
+        out.println("<td>"+"<a href='libros.jsp?isbn=" + isbn + "&titulo="+titulo+"&autor="+autor+"&editorial="+editorial_id+"&anio="+anio+"&Action=Actualizar'>Actualizar</a><br>");
         out.println("<a href='matto.jsp?isbn=" + isbn + "&Action=Eliminar'>Eliminar</a>"+"</td>");
         out.println("</tr>");
         i++;
     }
     out.println("</table>");
 
-    out.println("<div class='download-container'><a class='download' href='listado-csv.jsp' download='libros.csv'>Descargar Listado</a></div>");
+    out.println("<div class='download-container'><a class='download' href='listado-csv.jsp' download='libros.csv'>Descargar Listado CSV</a>");
+    out.println("<a class='download' href='listado-txt.jsp' download='libros.txt'>Descargar Listado TXT</a>");
+    out.println("<a class='download' href='listado-xml.jsp' download='libros.xml'>Descargar Listado XML</a>");
+    out.println("<a class='download' href='lista-json.jsp' download='libros.json'>Descargar Listado JSON</a>");
+    out.println("<a class='download' href='lista-html.jsp' download='libros.html'>Descargar Listado HTML</a></div>");
 
     // cierre de la conexion
     conexion.close();
