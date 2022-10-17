@@ -26,7 +26,7 @@ public Connection getConnection(String path) throws SQLException{
 ServletContext context = request.getServletContext();
 String path = context.getRealPath("/JSPdatos_Grupo05/data");
 Connection l_dbconn = getConnection(path);
-String ls_query = "select * from libros";
+String ls_query = "SELECT editoriales.editorial as edit, libros.* FROM libros INNER JOIN editoriales ON libros.editorial = editoriales.id";
 
 if (!l_dbconn.isClosed()){
     Statement l_stat = l_dbconn.createStatement();
@@ -40,9 +40,13 @@ if (!l_dbconn.isClosed()){
         impresion += l_rs.getString("autor");
         impresion += "\", \"titulo\":\"";
         impresion += l_rs.getString("titulo") ;
+        impresion += "\", \"año_publicacion\":\"";
+        impresion += l_rs.getString("anio") ;
+        impresion += "\", \"editorial\":\"";
+        impresion += l_rs.getString("edit") ;
         impresion += "\"},";
     }
-    out.write("["+ impresion+ "]");
+    out.write("["+ impresion.substring(0,impresion.length()-1)+ "]");
     l_dbconn.close();
 }
 

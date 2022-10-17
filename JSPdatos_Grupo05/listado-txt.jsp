@@ -27,9 +27,9 @@ String path = context.getRealPath("/JSPdatos_Grupo05/data");
 Connection conexion = getConnection(path);
 
     if (!conexion.isClosed()){
-        String isbn ="", titulo ="", autor= "",editorial= "",año= "";
+        String isbn ="", titulo ="", autor= "",editorial= "",anio= "";
         Statement st = conexion.createStatement();
-        ResultSet rs = st.executeQuery("select * from libros");
+        ResultSet rs = st.executeQuery("SELECT editoriales.editorial as edit, libros.* FROM libros INNER JOIN editoriales ON libros.editorial = editoriales.id");
 
         int i=1;
         while (rs.next())
@@ -37,15 +37,15 @@ Connection conexion = getConnection(path);
             isbn=rs.getString("isbn");
             titulo=rs.getString("titulo");
             autor=rs.getString("autor");
-            editorial=rs.getString("editorial");
-            año=rs.getString("año");
+            editorial=rs.getString("edit");
+            anio=rs.getString("anio");
 
             out.println("Numero: "+i);
             out.println("ISBN: "+isbn);
             out.println("Titulo: "+titulo);
             out.println("Autor: "+autor);
             out.println("Editorial: "+editorial);
-            out.println("Año de Publicacion: : "+año+"\n");
+            out.println("A�o de Publicacion: : "+anio+"\n\n");
             i++;
         }
         // cierre de la conexion

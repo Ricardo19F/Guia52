@@ -29,8 +29,8 @@ Connection conexion = getConnection(path);
     if (!conexion.isClosed()){
         String isbn ="", titulo ="", autor= "",editorial= "",anio= "";
         Statement st = conexion.createStatement();
-        ResultSet rs = st.executeQuery("select * from libros");
-        out.println("Num.;ISBN;Titulo;Autor;Editorial;Año Publicacion");
+        ResultSet rs = st.executeQuery("SELECT editoriales.editorial as edit, libros.* FROM libros INNER JOIN editoriales ON libros.editorial = editoriales.id");
+        out.println("Num.;ISBN;Titulo;Autor;Editorial;A�o Publicacion");
 
         int i=1;
         while (rs.next())
@@ -38,8 +38,8 @@ Connection conexion = getConnection(path);
             isbn=rs.getString("isbn");
             titulo=rs.getString("titulo");
             autor=rs.getString("autor");
-            editorial=rs.getString("editorial");
-            anio=rs.getString("año");
+            editorial=rs.getString("edit");
+            anio=rs.getString("anio");
             out.println(i+";"+isbn+";"+titulo+";"+autor+";"+editorial+";"+anio);
             i++;
         }
