@@ -230,7 +230,7 @@ if (!conexion.isClosed()){
       String editorial_id = rs.getString("editorial");
       
       if(isbn_enc.equals(isbn) || titulo_enc.equals(titulo) || autor_enc.equals(autor))
-        out.println("<tr style=\"background-color: rgb(83, 251, 111);\">");
+        out.println("<tr style=\"background-color: rgb(2, 255, 100); color: #091241;\">");
       else
         out.println("<tr>");
         out.println("<td>"+ i +"</td>");

@@ -92,13 +92,17 @@ td {
 
 td a {
   text-decoration: none;
-
+  text-align: center;
+  
   background-color: #00000077;
+  font-weight: 600;
   color: #f8f8f9;
-
+  
+  display: inline-block;
+  margin: 0.25ch;
   padding: 0 1ch;
   border-radius: 4px;
-  font-weight: 600;
+  width: 70px;
 
   transition: 200ms;
 }
@@ -123,18 +127,25 @@ tr:first-child td:nth-child(3) a::after {
 .download-container {
   padding-top: 1rem;
   padding-bottom: 10rem;
+
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .download {
   text-decoration: none !important;
-
+  text-align: center;
+  
   background-color: #00000077;
   color: #f8f8f9;
-
+  font-weight: 600;
+  
+  margin: 0.5ch 0.5ch;
   padding: 0 1ch;
   border-radius: 4px;
-  font-weight: 600;
-
+  
+  width: 180px;
+  
   transition: 200ms;
 }
 
