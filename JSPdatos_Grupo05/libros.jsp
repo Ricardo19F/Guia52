@@ -34,11 +34,29 @@
     </tr>
     <tr>
       <td>Editorial<select name="editorial">
-        <option id="editorial" value="<%
-	      if(request.getParameter("editorial")!=null){
-		      out.write(request.getParameter("editorial"));
-	      }
-      %>"></option></select></td>
+      <% 
+      ServletContext context1 = request.getServletContext();
+      String path1 = context1.getRealPath("/JSPdatos_Grupo05/data");
+      Connection conexion1 = getConnection(path1);
+
+          if (!conexion1.isClosed()){
+              Statement st1 = conexion1.createStatement();
+              ResultSet rs1 = st1.executeQuery("SELECT * FROM editoriales");
+              while (rs1.next())
+              {
+                String id_option = rs1.getString("id");
+                if(request.getParameter("editorial")!=null && request.getParameter("editorial").equals(id_option)){
+                    out.write("<option selected value='" + id_option + "'>" + rs1.getString("editorial") + "</option>");
+                  }
+                  else{
+                  out.write("<option value='" + id_option + "'>" + rs1.getString("editorial") + "</option>");
+                  }
+              }
+              // cierre de la conexion
+              conexion1.close();
+          }
+      %>
+        </select></td>
     </tr>
     <tr>
       <td>A&ntilde;o<input type="text" name="anio" id="anio" value="<%
