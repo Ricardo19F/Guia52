@@ -27,7 +27,7 @@ String path = context.getRealPath("/JSPdatos_Grupo05/data");
 Connection conexion = getConnection(path);
 
     if (!conexion.isClosed()){
-        String isbn ="", titulo ="", autor= "",editorial= "",año= "";
+        String isbn ="", titulo ="", autor= "",editorial= "",anio= "";
         Statement st = conexion.createStatement();
         ResultSet rs = st.executeQuery("select * from libros");
         out.println("Num.;ISBN;Titulo;Autor;Editorial;Año Publicacion");
@@ -39,8 +39,8 @@ Connection conexion = getConnection(path);
             titulo=rs.getString("titulo");
             autor=rs.getString("autor");
             editorial=rs.getString("editorial");
-            año=rs.getString("año");
-            out.println(i+";"+isbn+";"+titulo+";"+autor+";"+editorial+";"+año);
+            anio=rs.getString("año");
+            out.println(i+";"+isbn+";"+titulo+";"+autor+";"+editorial+";"+anio);
             i++;
         }
         // cierre de la conexion
