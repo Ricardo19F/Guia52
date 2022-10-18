@@ -11,7 +11,7 @@
 <form action="matto.jsp" method="post" name="Actualizar">
   <table>
     <tr>
-      <td>ISBN<input type="text" name="isbn" id="isbn" value="<%
+      <td>ISBN<input type="text" name="isbn" id="isbn" pattern="[0-9]+" title="Solo pueden digitarse numeros con maximo 10 digitos" maxlength="10" value="<%
       	if(request.getParameter("isbn")!=null){
 		      out.write(request.getParameter("isbn"));
 	        }
@@ -59,7 +59,7 @@
         </select></td>
     </tr>
     <tr>
-      <td>A&ntilde;o<input type="text" name="anio" id="anio" value="<%
+      <td>A&ntilde;o<input type="text" name="anio" id="anio" min="0" max="2022" pattern="[0-9]+" maxlength="4" value="<%
       	if(request.getParameter("anio")!=null){
 		      out.write(request.getParameter("anio"));
 	        }
